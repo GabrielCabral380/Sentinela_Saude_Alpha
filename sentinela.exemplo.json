@@ -1,0 +1,54 @@
+{
+  "alvo": "C:/caminho/para/IA_Alpha",
+  "pasta_estado": ".sentinela",
+  "intervalo_segundos": 300,
+  "reparo_automatico": true,
+  "logs": {
+    "padroes": ["logs/**/*.log", "*.log"]
+  },
+  "arquivos": {
+    "obrigatorios": ["core/motor/agentes_skill.py", "alfred2/kernel/__init__.py"]
+  },
+  "funcoes": [
+    {"modulo": "core.motor.agentes_skill", "funcao": "executar"}
+  ],
+  "comandos_saude": [
+    {
+      "nome": "testes_da_alpha",
+      "comando": ["python", "-m", "pytest", "-q"],
+      "timeout": 600
+    }
+  ],
+  "llm": {
+    "habilitado": true,
+    "reparar_erros_de_log": false,
+    "provedores": [
+      {
+        "nome": "free-claude-code",
+        "tipo": "cli",
+        "comando": ["claude", "-p"],
+        "ambiente": {"ANTHROPIC_BASE_URL": "http://localhost:8082", "ANTHROPIC_AUTH_TOKEN": "freecc"},
+        "timeout": 600
+      },
+      {
+        "nome": "freellmapi",
+        "tipo": "openai",
+        "url_env": "FREELLMAPI_URL",
+        "chave_env": "FREELLMAPI_KEY",
+        "modelo": "auto"
+      },
+      {
+        "nome": "claude",
+        "tipo": "cli",
+        "comando": ["claude", "-p"],
+        "timeout": 600
+      },
+      {
+        "nome": "hermes",
+        "tipo": "cli",
+        "comando": ["hermes", "chat", "-q", "{prompt}"],
+        "timeout": 600
+      }
+    ]
+  }
+}
